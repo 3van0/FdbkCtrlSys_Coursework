@@ -51,19 +51,19 @@ public:
     void pidInput(int speed)
     {
 
-/*         double lowlimtfwd = 50;
-        double lowlimtbkwd = 50; */
+        double lowlimtfwd = 40;
+        double lowlimtbkwd = 40; 
         if (speed > 0)
         {
-            //s = (255 - lowlimtfwd) / 255 * speed + lowlimtfwd;
+            s = (255 - lowlimtfwd) / 255 * speed + lowlimtfwd;
             this->setDirection(FORWARD);
-            this->updateSpeed(speed);
+            this->updateSpeed(s);
         }
         else
         {
-            //s = (255 - lowlimtbkwd) / 255 * (-speed) + lowlimtbkwd;
+            s = (255 - lowlimtbkwd) / 255 * (-speed) + lowlimtbkwd;
             this->setDirection(BACKWARD);
-            this->updateSpeed(-speed);
+            this->updateSpeed(s);
         }
     }
 };

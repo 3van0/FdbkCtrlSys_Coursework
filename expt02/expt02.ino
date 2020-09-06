@@ -9,9 +9,9 @@ int value = 1;
 volatile int count = 0;
 HGMotor motor1;
 double pidIn, pidOut, pidSet;
-double kp = 1;
+double kp = 0.98;
 double ki = 0;
-double kd = 0.08;
+double kd = 0.09;
 
 bool fwdbkwdflag = true;
 
@@ -62,12 +62,15 @@ void senchanged()
     count += motor1.addValue;
 }
 
-void goTo(int dest)
+bool goTo(int dest)
 {
     pidSet = dest;
     int destcount = 0;
+    int stopcount = 0;
+    int countlast = 0;
     while (true)
     {
+        countlast = count;
         Serial.println(count);
         pidIn = count;
         myPID.Compute();
@@ -82,6 +85,16 @@ void goTo(int dest)
         }
 
         if (destcount > 50)
+        {
+            return (true);
+        }
+        
+        stopcount += 1;
+        if (count - countlast != 0)
+        {
+            stopcount = 0;
+        }
+        if (stopcount > 50)
         {
             return (true);
         }
