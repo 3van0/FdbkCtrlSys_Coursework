@@ -9,9 +9,9 @@ int value = 1;
 volatile int count = 0;
 HGMotor motor1;
 double pidIn, pidOut, pidSet;
-double kp = 1;
-double ki = 0.002;
-double kd = 0.1;
+double kp = 0.9322;
+double ki = 0.001;
+double kd = 0.54;
 
 bool fwdbkwdflag = true;
 
@@ -34,9 +34,9 @@ void setup()
 void loop()
 {
 
-    goTo(224);
+    goTo2(224, 1);
     delay(1000);
-    goTo(0);
+    goTo2(0, 2);
     delay(1000);
 
     /*     int i;
@@ -75,6 +75,52 @@ bool goTo(int dest)
         pidIn = count;
         myPID.Compute();
         motor1.pidInput(pidOut);
+        if (abs(dest - count) < 10)
+        {
+            destcount += 1;
+        }
+        else
+        {
+            destcount = 0;
+        }
+
+        if (destcount > 100)
+        {
+            return (true);
+        }
+
+        stopcount += 1;
+        if (count - countlast != 0)
+        {
+            stopcount = 0;
+        }
+        if (stopcount > 100)
+        {
+            return (true);
+        }
+    }
+}
+
+bool goTo2(int dest, int dirc)
+{
+    pidSet = dest;
+    int destcount = 0;
+    int stopcount = 0;
+    int countlast = 0;
+    while (true)
+    {
+        countlast = count;
+        Serial.println(count);
+        pidIn = count;
+        myPID.Compute();
+        if (dirc == 1)
+        {
+            motor1.fwdPidIn(pidOut);
+        }
+        else if (dirc == 2)
+        {
+            motor1.bkwdPidIn(pidOut);
+        }
         if (abs(dest - count) < 20)
         {
             destcount += 1;
@@ -88,7 +134,7 @@ bool goTo(int dest)
         {
             return (true);
         }
-        
+
         stopcount += 1;
         if (count - countlast != 0)
         {

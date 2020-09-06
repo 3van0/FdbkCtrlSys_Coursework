@@ -36,8 +36,8 @@ public:
         }
         else if (currentDirection == STOP)
         {
-            digitalWrite(pin1, LOW);
-            digitalWrite(pin2, LOW);
+            digitalWrite(pin1, HIGH);
+            digitalWrite(pin2, HIGH);
         }
         currentSpeed = speed;
     }
@@ -52,7 +52,7 @@ public:
     {
 
         double lowlimtfwd = 40;
-        double lowlimtbkwd = 40; 
+        double lowlimtbkwd = 40;
         if (speed > 0)
         {
             s = (255 - lowlimtfwd) / 255 * speed + lowlimtfwd;
@@ -65,5 +65,25 @@ public:
             this->setDirection(BACKWARD);
             this->updateSpeed(s);
         }
+    }
+
+    void fwdPidIn(int speed)
+    {
+        if (speed < 40)
+        {
+            speed = 0;
+        }
+        this->setDirection(FORWARD);
+        this->updateSpeed(speed);
+    }
+
+    void bkwdPidIn(int speed)
+    {
+        if (speed > -40)
+        {
+            speed = 0;
+        }
+        this->setDirection(BACKWARD);
+        this->updateSpeed(-speed);
     }
 };
