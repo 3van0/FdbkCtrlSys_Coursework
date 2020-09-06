@@ -8,7 +8,7 @@ public:
     int currentSpeed = 0;
     int currentDirection = 0;
     int pin1, pin2;
-    int currentPos;
+    volatile int currentPos;
     double s = 0;
     char addValue = 0;
 
@@ -45,7 +45,11 @@ public:
     void setDirection(int dirc)
     {
         currentDirection = dirc;
-        addValue = currentDirection;
+        if (dirc != STOP)
+        {
+            addValue = currentDirection;
+        }
+
     }
 
     void pidInput(int speed)

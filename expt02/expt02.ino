@@ -9,9 +9,9 @@ int value = 1;
 volatile int count = 0;
 HGMotor motor1;
 double pidIn, pidOut, pidSet;
-double kp = 1;
+double kp = 1.4;
 double ki = 0.001;
-double kd = 0.1;
+double kd = 0.2;
 
 bool fwdbkwdflag = true;
 
@@ -33,11 +33,13 @@ void setup()
 
 void loop()
 {
+/*     goTest(0, 224);
+    delay(1000); */
 
     goTo2(224, FORWARD);
     delay(1000);
     goTo2(0, BACKWARD);
-    delay(1000);
+    delay(1000); 
 
     /*     int i;
     for (i = -1; i < 2; i++)
@@ -100,7 +102,7 @@ bool goTo(int dest)
         }
     }
 }
-
+ 
 bool goTo2(int dest, int dirc)
 {
     pidSet = dest;
@@ -117,11 +119,11 @@ bool goTo2(int dest, int dirc)
         {
             motor1.fwdPidIn(pidOut);
         }
-        else if (dirc == 2)
+        else if (dirc == -1)
         {
             motor1.bkwdPidIn(pidOut);
         }
-        if (abs(dest - count) < 5)
+        if (abs(dest - count) < 10)
         {
             motor1.setDirection(STOP);
         }
@@ -137,3 +139,35 @@ bool goTo2(int dest, int dirc)
         }
     }
 }
+
+/* bool goTest(int begin, int dest)
+{
+    double vcurrent;
+    while (true)
+    {
+        Serial.println(count);
+        vcurrent = getSpeed(count, begin, dest, 200, 100);
+        motor1.setDirection(FORWARD);
+        motor1.updateSpeed(vcurrent);
+        if (abs(dest - count) < 5)
+        {
+            motor1.setDirection(STOP);
+            return(true);
+        }
+    }
+}
+
+double getSpeed(int cpos, int bpos, int fpos, double vmax, double vmin)
+{
+    double v = 0;
+    if (cpos < (fpos + bpos) / 2)
+    {
+        v = (cpos - bpos) * (2 * (vmax - vmin) / (fpos - bpos)) + vmin;
+    }
+    else
+    {
+        v = (cpos - fpos) * (2 * (vmin - vmax) / (fpos - bpos)) + vmin;
+    }
+    return (v);
+}
+ */
