@@ -27,16 +27,16 @@ void setup()
     motor1.setDirection(1);
     Serial.begin(9600);
     pidSet = 224;
-    myPID.SetOutputLimits(-255, 255);
+    myPID.SetOutputLimits(-200, 200);
     myPID.SetMode(AUTOMATIC);
 }
 
 void loop()
 {
 
-    goTo2(224, 1);
+    goTo2(224, FORWARD);
     delay(1000);
-    goTo2(0, 2);
+    goTo2(0, BACKWARD);
     delay(1000);
 
     /*     int i;
