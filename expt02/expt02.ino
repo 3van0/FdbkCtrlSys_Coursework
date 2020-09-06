@@ -9,9 +9,9 @@ int value = 1;
 volatile int count = 0;
 HGMotor motor1;
 double pidIn, pidOut, pidSet;
-double kp = 0.98;
-double ki = 0;
-double kd = 0.09;
+double kp = 1;
+double ki = 0.002;
+double kd = 0.1;
 
 bool fwdbkwdflag = true;
 
@@ -84,7 +84,7 @@ bool goTo(int dest)
             destcount = 0;
         }
 
-        if (destcount > 50)
+        if (destcount > 100)
         {
             return (true);
         }
@@ -94,7 +94,7 @@ bool goTo(int dest)
         {
             stopcount = 0;
         }
-        if (stopcount > 50)
+        if (stopcount > 100)
         {
             return (true);
         }
