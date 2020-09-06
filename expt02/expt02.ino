@@ -121,18 +121,9 @@ bool goTo2(int dest, int dirc)
         {
             motor1.bkwdPidIn(pidOut);
         }
-        if (abs(dest - count) < 20)
+        if (abs(dest - count) < 5)
         {
-            destcount += 1;
-        }
-        else
-        {
-            destcount = 0;
-        }
-
-        if (destcount > 100)
-        {
-            return (true);
+            motor1.setDirection(STOP);
         }
 
         stopcount += 1;
