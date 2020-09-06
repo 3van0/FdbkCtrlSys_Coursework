@@ -75,7 +75,7 @@ bool goTo(int dest)
         pidIn = count;
         myPID.Compute();
         motor1.pidInput(pidOut);
-        if (abs(dest - count) < 10)
+        if (abs(dest - count) < 20)
         {
             destcount += 1;
         }
