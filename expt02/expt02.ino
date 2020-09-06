@@ -9,9 +9,9 @@ int value = 1;
 volatile int count = 0;
 HGMotor motor1;
 double pidIn, pidOut, pidSet;
-double kp = 0.9322;
+double kp = 1;
 double ki = 0.001;
-double kd = 0.54;
+double kd = 0.1;
 
 bool fwdbkwdflag = true;
 
